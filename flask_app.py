@@ -19,11 +19,13 @@ def home():
 
     print(f'DEBUG. Function received http method type: {request.method}')
 
-    if request.method == 'POST':
+    if request.method == 'POST' and 'calculate' in request.form:
         # Gather data that was submitted
         driving_speed = request.form.get('driving_speed')
         speed_limit = request.form.get('speed_limit')
         holiday_period = request.form.get('holiday_period')
+        print(f'{driving_speed=}')
+        print(f'{speed_limit=}')
         print(f'{holiday_period=}')
 
         if driving_speed != '' and speed_limit != '':
@@ -39,16 +41,33 @@ def home():
                 print(f'{mandatory_penalty=}')
                 print(f'{penalty_points=}')
 
-                if mandatory_penalty:
-                    flash(f'Mandatory penalty of {penalty_points} points.', WARNING_MSG)
+                # If the driving speed is a float, report it as a float, if it is an int, report it as an int
+                if driving_speed.is_integer():
+                    driving_speed = int(driving_speed)
                 else:
-                    flash(f'Optional penalty of {penalty_points} points.', SUCCESS_MSG)
+                    driving_speed = float(driving_speed)
+
+
+                if mandatory_penalty:
+                    # Mandatory penalty
+                    if mandatory_penalty == True:
+                        flash(f'The mandatory penalty for driving {driving_speed}km/h in a {speed_limit}km/h zone is {penalty_points} points.', WARNING_MSG)
+                if penalty_points == 0:
+                    flash(f'You are not required to pay a penalty for driving {driving_speed}km/h in a {speed_limit}km/h zone.', SUCCESS_MSG)
+                else:
+                    # It is an optional penalty
+                    flash(f'The discretional penalty for driving {driving_speed}km/h in a {speed_limit}km/h zone is {penalty_points} points.', WARNING_MSG)
             else:
-                # Data is invalid
-                flash('Invalid data entered. Please try again.', WARNING_MSG)
+                # Data is invalid because it contains non-numeric characters
+                flash('Invalid data entered. Please try again. Test 1', WARNING_MSG)
         else:
-            # Data is invalid
-            flash('Invalid data entered. Please try again.', WARNING_MSG)
+            # Data is invalid because it is empty
+            if driving_speed == '' and speed_limit != '':
+                flash('Please enter a driving speed.', WARNING_MSG)
+            if speed_limit == '' and driving_speed != '':
+                flash('Please enter a speed limit.', WARNING_MSG)
+            if driving_speed == '' and speed_limit == '':
+                flash('Please enter a driving speed and a speed limit.', WARNING_MSG)
 
     return render_template(HTML_TEMPLATE, title='Demerit Points Calculator')
 
