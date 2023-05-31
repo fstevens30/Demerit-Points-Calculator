@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <title>{{title}}</title>
+
+        <script>
+        function ResetFields()
+        {
+            document.getElementById("driving_speed").value = "";
+            document.getElementById("speed_limit").value = "";
+            document.getElementById("holiday_period").checked = false;
+            document.getElementById("flash_msgs").style.display='none';
+        }
+        </script>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    </head>
+
+    <body>
+
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <div class="container-fluid">	
+                <ul class="nav">
+                    <li><a class="nav-link" href="/">Home</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container mt-5 pt-2" style="max-width:800px">
+
+            <h2>Demerit Points Calculator</h2>
+
+            <form actions="{{ url_for('home') }}" method="POST">
+
+                <div class="form-row">
+                    <div class="form_group col-md-3">
+                        <label for="driving_speed">Driving Speed:</label>
+                        <input type="number" class="form-control" id="driving_speed" name="driving_speed"
+                            {% if driving_speed is defined %}value="{{driving_speed}}" {% endif %}>
+                    </div>
+
+                    <div class="form_group col-md-3">
+                        <label for="speed_limit">Speed Limit:</label>
+                        <input type="number" class="form-control" id="speed_limit" name="speed_limit"
+                            {% if speed_limit is defined %}value="{{speed_limit}}" {% endif %}>
+                    </div>
+                </div>
+
+                <div class="form_group col-md-3">
+                    <label for="holiday_period">Holiday Period:</label>
+                    <input type="checkbox" id="holiday_period" name="holiday_period"
+                        {% if holiday_period=="on"%}checked{% endif %}>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <button type="submit" class="btn btn-outline-primary btn-block btn-lg">Calculate</button>
+                    </div>
+
+                    <div class="form-group col-3">
+                        <input type="button" value="Reset" class="btn btn-outline-danger btn-block btn-lg" onclick="ResetFields();"/>
+                    </div>
+                </div>
+
+            </form>
+        
+        </div>
+
+        <!-- Flash messages -->
+        
+        <div class="container" id="flash_msgs">
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+                        <p>{{ message }}</p>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    </body>
+
+
+</html>
