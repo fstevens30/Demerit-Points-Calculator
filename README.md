@@ -14,8 +14,8 @@ This is a web application that calculates the demerit points for a speeding tick
 
 ## Usage
 
-The program can be accessed [here]().
-To run the program locally, 
+The program can be accessed [here](https://fas0265.pythonanywhere.com/).
+To run the program locally,
 
 1. Clone the repository
 2. Ensure that you have Python 3 and Flask installed
@@ -31,3 +31,7 @@ python flask_app.py
 ```
 
 Please be aware that the program is in no way an accurate representation of the demerit points system in New Zealand. It is only a lab project for a programming course.
+
+## Screenshot
+
+![Screenshot](screenshot.png)
