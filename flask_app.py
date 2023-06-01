@@ -19,7 +19,7 @@ def home():
 
     print(f'DEBUG. Function received http method type: {request.method}')
 
-    if request.method == 'POST' and 'calculate' in request.form:
+    if request.method == 'POST':
         # Gather data that was submitted
         driving_speed = request.form.get('driving_speed')
         speed_limit = request.form.get('speed_limit')
@@ -48,15 +48,15 @@ def home():
                     driving_speed = float(driving_speed)
 
 
-                if mandatory_penalty:
-                    # Mandatory penalty
-                    if mandatory_penalty == True:
-                        flash(f'The mandatory penalty for driving {driving_speed}km/h in a {speed_limit}km/h zone is {penalty_points} points.', WARNING_MSG)
+                if mandatory_penalty == True:
+                    flash(f'The mandatory penalty for driving {driving_speed}km/h in a {speed_limit}km/h zone is {penalty_points} points.', WARNING_MSG)
+                    return render_template(HTML_TEMPLATE, title='Demerit Points Calculator', driving_speed=driving_speed, speed_limit=speed_limit, holiday_period=holiday_period)
+                if mandatory_penalty == False:
+                    flash(f'The discretional penalty for driving {driving_speed}km/h in a {speed_limit}km/h zone is {penalty_points} points.', WARNING_MSG)
+                    return render_template(HTML_TEMPLATE, title='Demerit Points Calculator', driving_speed=driving_speed, speed_limit=speed_limit, holiday_period=holiday_period)
                 if penalty_points == 0:
                     flash(f'You are not required to pay a penalty for driving {driving_speed}km/h in a {speed_limit}km/h zone.', SUCCESS_MSG)
-                else:
-                    # It is an optional penalty
-                    flash(f'The discretional penalty for driving {driving_speed}km/h in a {speed_limit}km/h zone is {penalty_points} points.', WARNING_MSG)
+                    return render_template(HTML_TEMPLATE, title='Demerit Points Calculator', driving_speed=driving_speed, speed_limit=speed_limit, holiday_period=holiday_period)
             else:
                 # Data is invalid because it contains non-numeric characters
                 flash('Invalid data entered. Please try again. Test 1', WARNING_MSG)
@@ -64,8 +64,10 @@ def home():
             # Data is invalid because it is empty
             if driving_speed == '' and speed_limit != '':
                 flash('Please enter a driving speed.', WARNING_MSG)
+                return render_template(HTML_TEMPLATE, title='Demerit Points Calculator', speed_limit=speed_limit)
             if speed_limit == '' and driving_speed != '':
                 flash('Please enter a speed limit.', WARNING_MSG)
+                return render_template(HTML_TEMPLATE, title='Demerit Points Calculator', driving_speed=driving_speed)
             if driving_speed == '' and speed_limit == '':
                 flash('Please enter a driving speed and a speed limit.', WARNING_MSG)
 
