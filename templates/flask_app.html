@@ -38,13 +38,13 @@
                 <div class="form-row">
                     <div class="form_group col-md-3">
                         <label for="driving_speed">Driving Speed:</label>
-                        <input type="text" class="form-control" id="driving_speed" name="driving_speed"
+                        <input type="float" class="form-control" id="driving_speed" name="driving_speed"
                             {% if driving_speed is defined %}value="{{driving_speed}}" {% endif %}>
                     </div>
 
                     <div class="form_group col-md-3">
                         <label for="speed_limit">Speed Limit:</label>
-                        <input type="text" class="form-control" id="speed_limit" name="speed_limit"
+                        <input type="float" class="form-control" id="speed_limit" name="speed_limit"
                             {% if speed_limit is defined %}value="{{speed_limit}}" {% endif %}>
                     </div>
                 </div>
