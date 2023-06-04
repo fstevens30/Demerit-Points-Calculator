@@ -51,7 +51,7 @@ def home():
                 if mandatory_penalty == True:
                     flash(f'The mandatory penalty for driving {driving_speed}km/h in a {speed_limit}km/h zone is {penalty_points} points.', WARNING_MSG)
                     return render_template(HTML_TEMPLATE, title='Demerit Points Calculator', driving_speed=driving_speed, speed_limit=speed_limit, holiday_period=holiday_period)
-                if mandatory_penalty == False:
+                if mandatory_penalty == False and penalty_points > 0:
                     flash(f'The discretional penalty for driving {driving_speed}km/h in a {speed_limit}km/h zone is {penalty_points} points.', WARNING_MSG)
                     return render_template(HTML_TEMPLATE, title='Demerit Points Calculator', driving_speed=driving_speed, speed_limit=speed_limit, holiday_period=holiday_period)
                 if penalty_points == 0:
