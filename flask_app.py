@@ -64,12 +64,13 @@ def home():
             # Data is invalid because it is empty
             if driving_speed == '' and speed_limit != '':
                 flash('Please enter a driving speed.', WARNING_MSG)
-                return render_template(HTML_TEMPLATE, title='Demerit Points Calculator', speed_limit=speed_limit)
+                return render_template(HTML_TEMPLATE, title='Demerit Points Calculator', speed_limit=speed_limit, holiday_period=holiday_period)
             if speed_limit == '' and driving_speed != '':
                 flash('Please enter a speed limit.', WARNING_MSG)
-                return render_template(HTML_TEMPLATE, title='Demerit Points Calculator', driving_speed=driving_speed)
+                return render_template(HTML_TEMPLATE, title='Demerit Points Calculator', driving_speed=driving_speed, holiday_period=holiday_period)
             if driving_speed == '' and speed_limit == '':
                 flash('Please enter a driving speed and a speed limit.', WARNING_MSG)
+                return render_template(HTML_TEMPLATE, title='Demerit Points Calculator', holiday_period=holiday_period)
 
     return render_template(HTML_TEMPLATE, title='Demerit Points Calculator')
 
