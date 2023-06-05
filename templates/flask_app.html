@@ -65,7 +65,7 @@
                 <div class="form_group col-md-3">
                     <label for="holiday_period">Holiday Period:</label>
                     <input type="checkbox" id="holiday_period" name="holiday_period"
-                        {% if holiday_period=="on"%}checked{% endif %}>
+                        {% if holiday_period is defined and holiday_period == True %}checked {% endif %}>
                 </div>
 
                 <div class="form-row">
