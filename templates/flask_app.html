@@ -17,6 +17,19 @@
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+        <style>
+            /* Hide the number input arrows (spinners) */
+            input[type="number"]::-webkit-inner-spin-button,
+            input[type="number"]::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+        
+            input[type="number"] {
+                -moz-appearance: textfield; /* Firefox */
+            }
+        </style>
+
     </head>
 
     <body>
@@ -38,13 +51,13 @@
                 <div class="form-row">
                     <div class="form_group col-md-3">
                         <label for="driving_speed">Driving Speed:</label>
-                        <input type="float" class="form-control" id="driving_speed" name="driving_speed"
+                        <input type="number" step="any" class="form-control" id="driving_speed" name="driving_speed"
                             {% if driving_speed is defined %}value="{{driving_speed}}" {% endif %}>
                     </div>
 
                     <div class="form_group col-md-3">
                         <label for="speed_limit">Speed Limit:</label>
-                        <input type="float" class="form-control" id="speed_limit" name="speed_limit"
+                        <input type="number" step="any" class="form-control" id="speed_limit" name="speed_limit"
                             {% if speed_limit is defined %}value="{{speed_limit}}" {% endif %}>
                     </div>
                 </div>
