@@ -1,20 +1,32 @@
 import os
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request, flash, redirect, url_for
 from get_demerit_points import get_demerit_points
 
 SUCCESS_MSG = 'success'
 WARNING_MSG = 'warning'
 KEY_SIZE = 24
 HTML_TEMPLATE = 'flask_app.html'
+ERROR_TEMPLATE = '404_page.html'
 
 # Create Flask instance and set the session key
 app = Flask(__name__)
 app.secret_key = os.urandom(KEY_SIZE)
-        
+
+# Error handling for invalid URLs
+@app.errorhandler(404)
+def page_not_found(e):
+    """
+    Error handler for invalid URLs
+    Returns the 404.html template
+    """
+    return render_template(ERROR_TEMPLATE, title='404'), 404
+
+# Main page
 @app.route('/', methods=['GET', 'POST'])
 def home():
     """
-    Home page handler
+    Home page handler, uses the home.html template
+    Logic is from the get_demerit_points.py file
     """
 
     print(f'DEBUG. Function received http method type: {request.method}')
