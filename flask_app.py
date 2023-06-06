@@ -7,9 +7,11 @@ SUCCESS_MSG = 'success' # Bootstrap alert types
 WARNING_MSG = 'warning'
 HTML_TEMPLATE = 'flask_app.html'
 ERROR_TEMPLATE = '404_page.html'
+KEY_SIZE = 24
 
 # Create Flask instance and set the session key
 app = Flask(__name__)
+app.secret_key = os.urandom(KEY_SIZE)
 
 # Error handling for invalid URLs
 @app.errorhandler(404)
@@ -22,7 +24,7 @@ def page_not_found(e):
     return render_template(ERROR_TEMPLATE, title='404'), 404
 
 # Main page
-@app.route('/', methods=['GET','POST'])
+@app.route('/', methods=['GET', 'POST'])
 def home():
     """
     Home page handler, uses the home.html template
@@ -64,7 +66,7 @@ def home():
                     return render_template(HTML_TEMPLATE, title='Demerit Points Calculator', driving_speed=driving_speed, speed_limit=speed_limit, holiday_period=holiday_period)
                 
         else: # Invalid Data
-            if driving_speed == '' and speed_limit != '': # Both fields are empty
+            if driving_speed == '' and speed_limit != '': # Speed limit is empty
                 flash('Please enter a driving speed.', WARNING_MSG)
                 return render_template(HTML_TEMPLATE, title='Demerit Points Calculator', speed_limit=speed_limit, holiday_period=holiday_period)
             if speed_limit == '' and driving_speed != '': # Driving speed is empty
